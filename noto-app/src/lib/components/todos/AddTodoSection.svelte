@@ -2,8 +2,8 @@
 	import { addTodo } from '../../store/NotoStore';
 </script>
 
-<section class="flex justify-between">
-	<h3 class="text-xl font-bold text-gray-three">Checklist</h3>
+<section class="flex justify-between items-center">
+	<h3 class="text-xl font-bold text-gray-600">Checklist</h3>
 	<button
 		class="group flex items-center rounded-md border-white bg-green-600 px-6 py-3 text-lg font-semibold text-gray-100 outline outline-2 outline-offset-2 outline-green-500 hover:text-white focus-visible:text-white focus-visible:outline-green-500"
 		type="button"
