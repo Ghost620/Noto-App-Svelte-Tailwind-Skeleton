@@ -34,11 +34,11 @@
 
         {:else}
 
-            <div class="grid">
-                <div>
-                    <h2>Articles:</h2>
+            <div class="flex space-x-4">
+                <div class="w-1/2">
+                    <h2 class="text-2xl font-bold">NOTES</h2>
                     {#each articles as article}
-                        <article>
+                        <article class="flex flex-col space-y-3 py-6 outline">
                             <header>{article.title}</header>
                             <p>
                                 {article.content}
@@ -50,13 +50,14 @@
                         </article>
                     {/each}
                 </div>
-                <form action="?/createArticle" method="POST">
-                    <h3>New Article</h3>
-                    <label for="title"> Title </label>
-                    <input type="text" id="title" name="title" />
-                    <label for="title"> Title </label>
-                    <textarea id="content" name="content" rows={5} />
-                    <button type="submit">Add Article</button>
+                <form class="w-1/2 flex flex-col space-y-2 items-center" action="?/createArticle" method="POST">
+                    <h3 class="text-2xl font-bold">New Note</h3>
+                    <label class="w-full" for="title"> Title </label>
+                    <input type="text" id="title" name="title" class="w-full" />
+                    <label class="w-full" for="title"> Notes </label>
+                    <textarea class="w-full" id="content" name="content" rows={5} />
+                    <label class="w-full text-slate-200" for="">e</label>
+                    <button class="bg-cyan-500 text-white font-bold hover:bg-cyan-700 text-lg w-1/2 py-2" type="submit">Add Note</button>
                 </form>
             </div>
 
