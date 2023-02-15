@@ -12,8 +12,8 @@
 	$: progressPercentage = Math.round((progressCount / totalCount) * 100) || 0;
 </script>
 
-<section class="mt-10">
-	<h3 class="text-xl font-bold text-gray-three">Progress</h3>
+<section class="mt-10 bg-slate-200 rounded-xl p-6">
+	<h3 class="text-xl font-bold text-gray-three"> ToDo Progress </h3>
 	<div class="mt-8 space-y-8">
 		<ProgressBar title="In Progress" percentage={progressPercentage} />
 		<ProgressBar title="Completed" percentage={completePercentage} />
