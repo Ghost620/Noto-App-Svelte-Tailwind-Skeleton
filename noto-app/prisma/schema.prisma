@@ -9,6 +9,6 @@ datasource db {
 
 model Article {
     id      Int    @id @default(autoincrement())
-    title   String
+    type   Json   @default("{'gray': 'notes}")
     content String
 }
