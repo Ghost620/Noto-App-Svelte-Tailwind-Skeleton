@@ -2,12 +2,24 @@
 	import AddTodoSection from "../lib/components/todos/AddTodoSection.svelte";
 	import TodoSection from '../lib/components/todos/TodoSection.svelte';
 	import ProgressSection from '../lib/components/progress/ProgressSection.svelte';
-
-    let isNotes = false;
-
+    import { isNotes } from '../lib/store/NotoStore';
     import type { PageData } from './$types'
 	export let data: PageData
 	$: ({ articles } = data)
+
+    async function handleSubmit(event: { preventDefault: () => void; target: any; }) {
+        event.preventDefault();
+        // const form = event.target;
+        // const formData = new FormData(form);
+        // console.log(form)
+        // const response = await fetch('?/createArticle', {
+        //     method: 'POST',
+        //     body: {
+        //         type: $isNotes ? 'note': 'todo',
+		// 	 	content: document.getElementById('content').value
+        //     }
+        // });
+    }
     
 </script>
 
@@ -20,7 +32,7 @@
             <div class="flex flex-col space-y-5 h-[90%] p-2 overflow-y-scroll">
                 {#each articles as article}
                     <article class="py-3 px-2 bg-slate-300 outline rounded">
-                        <header class="uppercase font-bold bg-slate-400 -mx-2 px-3 py-2 -mt-3">{article.title}</header>
+                        <header class="uppercase font-bold bg-slate-400 -mx-2 px-3 py-2 -mt-3">{article.type}</header>
                         <p class="font-semibold px-3 py-4">
                             {article.content}
                         </p>
@@ -38,18 +50,18 @@
 
         <div class="flex flex-col w-1/2">
             <main class="mx-auto w-full rounded-none bg-slate-200 px-5 py-10 outline-none md:w-full md:rounded-2xl md:px-8 md:outline md:outline-4 md:outline-offset-8 md:outline-slate-200">
-                <form class="w-full flex flex-col space-y-8 items-center" action="?/createArticle" method="POST">
+                <form class="w-full flex flex-col space-y-8 items-center" action="?/createArticle"on:submit={handleSubmit} method="POST">
     
                     <div class="flex items-center justify-evenly pt-5 pb-10 space-x-8">
                         <span class="flex-start font-bold text-gray-900 text-2xl">Notes</span>
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" bind:checked={isNotes} value="" class="sr-only peer">
+                            <input type="checkbox" bind:checked={$isNotes} on:click={() => isNotes.set(!$isNotes)} class="sr-only peer">
                             <div class="w-11 h-6 rounded-full peer bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600"></div>
                         </label>
                         <span class="flex-end font-bold text-gray-900 text-2xl"> ToDo </span>
                     </div>
     
-                    {#if isNotes}
+                    {#if $isNotes}
                         <textarea class="w-full" id="content" name="content" placeholder="Leave a NoTo..." rows={10} />
     
                         <ul class="items-center w-full text-sm font-medium bg-white border border-gray-200 rounded-lg sm:flex dark:bg-slate-500 dark:border-gray-600 text-white">
@@ -77,7 +89,7 @@
                                     <button class="relative flex z-10 p-2 focus:outline-none focus:border-blue-400">
                                         <span class="flex items-center pr-4 mt-1 text-white">Share</span>
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="h-5 w-6 my-1 text-blue-700">
-                                        <path fill="currentColor" d="M352 320c-22.608 0-43.387 7.819-59.79 20.895l-102.486-64.054a96.551 96.551 0 0 0 0-41.683l102.486-64.054C308.613 184.181 329.392 192 352 192c53.019 0 96-42.981 96-96S405.019 0 352 0s-96 42.981-96 96c0 7.158.79 14.13 2.276 20.841L155.79 180.895C139.387 167.819 118.608 160 96 160c-53.019 0-96 42.981-96 96s42.981 96 96 96c22.608 0 43.387-7.819 59.79-20.895l102.486 64.054A96.301 96.301 0 0 0 256 416c0 53.019 42.981 96 96 96s96-42.981 96-96-42.981-96-96-96z">
+                                        <path fill="#FFFFFF" d="M352 320c-22.608 0-43.387 7.819-59.79 20.895l-102.486-64.054a96.551 96.551 0 0 0 0-41.683l102.486-64.054C308.613 184.181 329.392 192 352 192c53.019 0 96-42.981 96-96S405.019 0 352 0s-96 42.981-96 96c0 7.158.79 14.13 2.276 20.841L155.79 180.895C139.387 167.819 118.608 160 96 160c-53.019 0-96 42.981-96 96s42.981 96 96 96c22.608 0 43.387-7.819 59.79-20.895l102.486 64.054A96.301 96.301 0 0 0 256 416c0 53.019 42.981 96 96 96s96-42.981 96-96-42.981-96-96-96z">
                                         </path>
                                         </svg>
                                     </button>
@@ -92,23 +104,22 @@
                         
                         <ul class="items-center w-full text-sm font-medium bg-white border border-gray-200 rounded-lg sm:flex dark:bg-slate-500 dark:border-gray-600 text-white">
                             
-                            <li class="w-full flex flex-col items-center">
+                            <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600 flex flex-col items-center">
                                 <div class="flex items-center">
                                     <button class="relative flex z-10 p-2 focus:outline-none focus:border-blue-400">
                                         <span class="flex items-center pr-4 mt-1 text-white"> Thread </span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="h-5 w-6 my-1 text-blue-700">
-                                        <path fill="currentColor" d="M352 320c-22.608 0-43.387 7.819-59.79 20.895l-102.486-64.054a96.551 96.551 0 0 0 0-41.683l102.486-64.054C308.613 184.181 329.392 192 352 192c53.019 0 96-42.981 96-96S405.019 0 352 0s-96 42.981-96 96c0 7.158.79 14.13 2.276 20.841L155.79 180.895C139.387 167.819 118.608 160 96 160c-53.019 0-96 42.981-96 96s42.981 96 96 96c22.608 0 43.387-7.819 59.79-20.895l102.486 64.054A96.301 96.301 0 0 0 256 416c0 53.019 42.981 96 96 96s96-42.981 96-96-42.981-96-96-96z">
-                                        </path>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="#FFFFFF" class="h-5 w-6 my-1 text-blue-700"> 
+                                            <path fill-rule="evenodd" d="M4.243 2.757A2.828 2.828 0 017.07 2h5.658a2.828 2.828 0 012.828 2.828v6.912a2.828 2.828 0 01-2.828 2.828H9.243l-2.829 2.829v-2.829H3.242a2.828 2.828 0 01-2.829-2.828V5.585c0-.776.316-1.49.857-2.02zm1.414 1.414a1 1 0 00-1.414 1.414c.33.33.736.572 1.17.706A1.009 1.009 0 004 6.009v3.172a1 1 0 001 1h3.172a1.009 1.009 0 00.854-.457c.135-.434.377-.84.707-1.17a1 1 0 00-1.414-1.414c-.25.25-.44.56-.555.891H5a1 1 0 01-1-1V6.192c0-.168.065-.329.183-.448.119-.118.28-.183.448-.183h.585c.33-.111.641-.301.891-.551z" clip-rule="evenodd" />
                                         </svg>
                                     </button>
                                 </div>
                             </li>
-                            <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600 flex flex-col items-center">
+                            <li class="w-full flex flex-col items-center">
                                 <div class="flex items-center">
                                     <button class="relative flex z-10 p-2 focus:outline-none focus:border-blue-400">
                                         <span class="flex items-center pr-4 mt-1 text-white">Share</span>
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="h-5 w-6 my-1 text-blue-700">
-                                        <path fill="currentColor" d="M352 320c-22.608 0-43.387 7.819-59.79 20.895l-102.486-64.054a96.551 96.551 0 0 0 0-41.683l102.486-64.054C308.613 184.181 329.392 192 352 192c53.019 0 96-42.981 96-96S405.019 0 352 0s-96 42.981-96 96c0 7.158.79 14.13 2.276 20.841L155.79 180.895C139.387 167.819 118.608 160 96 160c-53.019 0-96 42.981-96 96s42.981 96 96 96c22.608 0 43.387-7.819 59.79-20.895l102.486 64.054A96.301 96.301 0 0 0 256 416c0 53.019 42.981 96 96 96s96-42.981 96-96-42.981-96-96-96z">
+                                        <path fill="#FFFFFF" d="M352 320c-22.608 0-43.387 7.819-59.79 20.895l-102.486-64.054a96.551 96.551 0 0 0 0-41.683l102.486-64.054C308.613 184.181 329.392 192 352 192c53.019 0 96-42.981 96-96S405.019 0 352 0s-96 42.981-96 96c0 7.158.79 14.13 2.276 20.841L155.79 180.895C139.387 167.819 118.608 160 96 160c-53.019 0-96 42.981-96 96s42.981 96 96 96c22.608 0 43.387-7.819 59.79-20.895l102.486 64.054A96.301 96.301 0 0 0 256 416c0 53.019 42.981 96 96 96s96-42.981 96-96-42.981-96-96-96z">
                                         </path>
                                         </svg>
                                     </button>

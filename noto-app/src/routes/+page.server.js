@@ -10,12 +10,12 @@ export const load = async () => {
 
 export const actions = {
 	createArticle: async ({ request }) => {
-		const { title, content } = Object.fromEntries(await request.formData());
+		const { type, content } = Object.fromEntries(await request.formData());
 		try {
 		  await prisma.article.create({
 			data: {
-			  title,
-			  content
+				type:'3',
+			 	content
 			}
 		  });
 		} catch (err) {
