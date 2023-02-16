@@ -1,6 +1,6 @@
 import type { Actions, PageServerLoad } from "./$types"
 import { prisma } from "$lib/server/prisma"
-import { error, fail } from "@sveltejs/kit"
+import { error, fail, redirect } from "@sveltejs/kit"
 
 export const load: PageServerLoad = async ({ params }) => {
 	const getArticle = async () => {
@@ -21,8 +21,12 @@ export const load: PageServerLoad = async ({ params }) => {
 }
 
 export const actions: Actions = {
-	updateArticle: async ({ request, params }) => {
-		const { title, content } = Object.fromEntries(await request.formData()) as {
+	updateArticle: async ({ request, params, locals }) => {
+		const { user, session } = await locals.validateUser()
+		if (!(user && session)) {
+			throw redirect(302, "/")
+		}
+		const { content } = Object.fromEntries(await request.formData()) as {
 			title: string
 			content: string
 		}
@@ -33,7 +37,6 @@ export const actions: Actions = {
 					id: Number(params.articleId),
 				},
 				data: {
-					title,
 					content,
 				},
 			})
