@@ -3,6 +3,7 @@
     import NotesFooter from "../lib/components/NotesFooter.svelte";
     import TodoFooter from "../lib/components/TodoFooter.svelte";
     import Notos from '../lib/components/Notos.svelte';
+    import Counter from '../lib/components/Counter.svelte';
     import { isNotes } from '../lib/store/NotoStore';
     import type { PageData } from './$types'
 	export let data: PageData
@@ -55,6 +56,7 @@
         </div>
 
         <div class="flex flex-col w-1/2">
+
             <main class="mx-auto w-full rounded-none bg-slate-200 px-5 py-10 outline-none md:w-full md:rounded-2xl md:px-8 md:outline md:outline-4 md:outline-offset-8 md:outline-slate-200">
                 <form class="w-full flex flex-col space-y-8 items-center" action="?/createArticle"on:submit={handleSubmit} method="POST">
     
@@ -83,6 +85,9 @@
     
                 </form>
             </main>
+
+            <Counter articles={articles}/>
+
             <ProgressSection />
         </div>
     </div>
