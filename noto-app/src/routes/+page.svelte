@@ -1,9 +1,8 @@
 <script lang="ts">
-	import AddTodoSection from "../lib/components/todos/AddTodoSection.svelte";
-	import TodoSection from '../lib/components/todos/TodoSection.svelte';
 	import ProgressSection from '../lib/components/progress/ProgressSection.svelte';
     import NotesFooter from "../lib/components/NotesFooter.svelte";
     import TodoFooter from "../lib/components/TodoFooter.svelte";
+    import Notos from '../lib/components/Notos.svelte';
     import { isNotes } from '../lib/store/NotoStore';
     import type { PageData } from './$types'
 	export let data: PageData
@@ -49,18 +48,7 @@
 
             <div class="flex flex-col space-y-5 h-[90%] p-2 overflow-y-scroll">
                 {#each articles as article}
-                    <article class="py-3 px-2 bg-slate-300 border-8 {article.type.split('-')[0] == 'todo' ? (article.type.split('-')[1] == 'green' ? 'border-green-600' : (article.type.split('-')[1] == 'yellow' ? 'border-yellow-600' : 'border-red-600')) : 'border-gray-600' } rounded-md">
-                        <header class="uppercase font-bold bg-slate-500 text-white -mx-2 px-3 py-2 -mt-3">{article.type.split('-')[0]}</header>
-                        <p class="font-semibold px-3 py-4">
-                            {article.content}
-                        </p>
-                        <div class="flex -space-x-12 justify-evenly w-full">
-                            <a href="/{article.id}" role="button" class="bg-teal-600 hover:bg-teal-700 text-white rounded-md w-20 h-8 text-center py-1">Edit</a>
-                            <form action="?/deleteArticle&id={article.id}" method="POST">
-                                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white rounded-md w-20 h-8 text-center">Delete</button>
-                            </form>
-                        </div>
-                    </article>
+                    <Notos article={article} />
                 {/each}
             </div>
 
