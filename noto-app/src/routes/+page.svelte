@@ -88,7 +88,7 @@
 
             <Counter articles={articles}/>
 
-            <ProgressSection />
+            <ProgressSection articles={articles}/>
         </div>
     </div>
 

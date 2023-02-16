@@ -1,20 +1,18 @@
 <script>
 // @ts-nocheck
-
-	export let title;
 	export let percentage;
-	$: completeClass = title === 'Completed' ? 'bg-green-500' : 'bg-yellow-500';
+	export let color;
+	export let count;
 </script>
 
-<div>
-	<div class="flex justify-between text-base font-normal text-gray-three">
-		<p>{title}</p>
-		<p>{percentage}%</p>
-	</div>
-	<div class="mt-5 h-4 w-full overflow-hidden rounded-full bg-gray-one">
+<div class="flex items-center space-x-16">
+	<div class="mt-5 h-4 w-full overflow-hidden rounded-full bg-gray-50">
 		<div
-			class="{completeClass} h-4 rounded-full transition-all duration-500 ease-out"
-			style="width: {percentage}%"
+		class="h-4 rounded-full transition-all duration-500 ease-out {color}"
+		style="width: {percentage}%"
 		/>
+	</div>
+	<div class="text-base font-normal h-1">
+		<p class="w-max">{percentage}% ({count})</p>
 	</div>
 </div>
