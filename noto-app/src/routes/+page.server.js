@@ -14,7 +14,7 @@ export const actions = {
 		try {
 		  await prisma.article.create({
 			data: {
-				type:'3',
+				type,
 			 	content
 			}
 		  });
