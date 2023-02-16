@@ -1,7 +1,8 @@
 <script lang="ts">
     import "../app.css";
-	import type { PageData } from './$types'
-	export let data: PageData
+	import type { PageData } from './$types';
+    export let data: PageData;
+    console.log(data)
 </script>
 
 <div class="container">
@@ -13,7 +14,7 @@
 				{#if !data.user}
 					<li><a href="/register">Register</a></li>
 					<li><a href="/login" role="button">Login</a></li>
-				{:else}
+				<!-- {:else} -->
 					<li>
 						<button formaction="/logout" type="submit">Logout</button>
 					</li>
