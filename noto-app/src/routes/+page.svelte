@@ -23,7 +23,7 @@
 
         const formData = new URLSearchParams({
             type: $isNotes ? ( (selectedValue == 'green') ? 'todo-green' : ((selectedValue == 'yellow') ? 'todo-yellow' : 'todo-red' ) ) : 'note',
-            content: (document.getElementById('content') as HTMLInputElement)?.value 
+            content: (document.getElementById('content') as HTMLInputElement)?.value,
         });
         
         const response = await fetch('?/createArticle', {

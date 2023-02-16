@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { prisma } from "$lib/server/prisma"
-import { fail } from "@sveltejs/kit"
+import { error, fail, redirect } from "@sveltejs/kit"
 
 export const load = async () => {
 	return {
@@ -9,13 +9,19 @@ export const load = async () => {
 }
 
 export const actions = {
-	createArticle: async ({ request }) => {
+
+	createArticle: async ({ request, locals }) => {
+		const { user, session } = await locals.validateUser()
+		if (!(user && session)) {
+			throw redirect(302, "/")
+		}
 		const { type, content } = Object.fromEntries(await request.formData());
 		try {
 		  await prisma.article.create({
 			data: {
 				type,
-			 	content
+			 	content,
+				userId: user.userId,
 			}
 		  });
 		} catch (err) {
@@ -26,13 +32,28 @@ export const actions = {
 		  status: 201
 		};
 	},
-	deleteArticle: async ({ url }) => {
+
+	deleteArticle: async ({ url, locals }) => {
+		const { user, session } = await locals.validateUser()
+		if (!(user && session)) {
+			throw redirect(302, "/")
+		}
 		const id = url.searchParams.get("id")
 		if (!id) {
 			return fail(400, { message: "Invalid request" })
 		}
 
 		try {
+			const article = await prisma.article.findUniqueOrThrow({
+				where: {
+					id: Number(id),
+				},
+			})
+
+			if (article.userId !== user.userId) {
+				throw error(403, "Not authorized")
+			}
+
 			await prisma.article.delete({
 				where: {
 					id: Number(id),
