@@ -47,7 +47,7 @@
 
         <div class="w-1/2 space-y-6 mt-4">
 
-            <div class="flex flex-col space-y-5 h-[90%] p-2 overflow-y-scroll">
+            <div id='noto-section' class="flex flex-col space-y-5 h-[90%] p-2 overflow-y-scroll">
                 {#each articles as article}
                     <Notos article={article} />
                 {/each}
