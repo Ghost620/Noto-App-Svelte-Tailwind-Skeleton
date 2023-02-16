@@ -1,4 +1,4 @@
-<ul class="items-center w-full text-sm font-medium bg-white border border-gray-200 rounded-lg sm:flex dark:bg-slate-500 dark:border-gray-600 text-white">
+<ul class="items-center w-full text-sm font-medium bg-white border border-gray-200 sm:flex dark:bg-slate-500 dark:border-gray-600 text-white">
                             
     <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600 flex flex-col items-center">
         <div class="flex items-center">
