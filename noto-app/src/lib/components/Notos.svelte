@@ -2,7 +2,7 @@
 // @ts-nocheck
     export let article;
     import NotesFooter from "./NotesFooter.svelte";
-    $: typee = 'note'
+    $: typee = article.type
     
     async function handleSubmit(event: { preventDefault: () => void; target: any; }) {
         event.preventDefault();
