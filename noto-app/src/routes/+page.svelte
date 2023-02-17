@@ -23,7 +23,7 @@
 
         const formData = new URLSearchParams({
             type: $isNotes ? ( (selectedValue == 'green') ? 'todo-green' : ((selectedValue == 'yellow') ? 'todo-yellow' : 'todo-red' ) ) : 'note',
-            content: (document.getElementById('content') as HTMLInputElement)?.value,
+            content: (document.getElementById('create-content') as HTMLInputElement)?.value,
         });
         
         const response = await fetch('?/createArticle', {
@@ -69,7 +69,7 @@
                         <span class="flex-end font-bold text-gray-900 text-2xl"> ToDo </span>
                     </div>
     
-                    <textarea class="w-full" id="content" name="content" placeholder="Leave a NoTo..." rows={10} />
+                    <textarea class="w-full" id="create-content" name="content" placeholder="Leave a NoTo..." rows={10} />
                     {#if $isNotes}
                         <TodoFooter />
                     {:else}

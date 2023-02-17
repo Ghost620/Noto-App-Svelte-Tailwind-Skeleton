@@ -6,22 +6,21 @@
     async function handleSubmit(event: { preventDefault: () => void; target: any; }) {
         event.preventDefault();
 
-        const radioButtons = document.getElementById('7').parentNode.parentNode.querySelectorAll('input[type="radio"]');
+        const radioButtons = document.getElementById(article.id).parentNode.parentNode.querySelectorAll('input[type="radio"]');
         let selectedValue;
 
         radioButtons.forEach(radio => {
             if ((radio as HTMLInputElement).checked) {
                 selectedValue = (radio as HTMLInputElement).value;
-                console.log(selectedValue)
             }
         });
 
         const formData = new URLSearchParams({
             type: (article.type.split('-')[0] == 'todo') ? ( (selectedValue == 'green') ? 'todo-green' : ((selectedValue == 'yellow') ? 'todo-yellow' : 'todo-red' ) ) : 'note',
-            content: (document.getElementById('content') as HTMLInputElement)?.value,
+            content: (document.getElementById(article.id).parentNode.parentNode.querySelector('textarea') as HTMLInputElement)?.value,
         });
 
-        const response = await fetch(`/?updateArticle&id=${article.id}`, {
+        const response = await fetch(`/?updateArticle`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -31,15 +30,16 @@
 
         if (response.ok) {
             window.location.href = '/';
+            console.log('done')
         } else {
-            console.log(response.body)
+            console.log(response)
             throw new Error(`Failed to update article: ${response.status} ${response.statusText}`);
         }
     }
 
   </script>
 
-<form action="?/updateArticle&id={article.id}" on:submit={handleSubmit} method="POST" class="py-3 px-2 bg-slate-300 border-8 {article.type.split('-')[0] == 'todo' ? (article.type.split('-')[1] == 'green' ? 'border-green-600' : (article.type.split('-')[1] == 'yellow' ? 'border-yellow-600' : 'border-red-600')) : 'border-gray-600' } rounded-lg">
+<form action="?/updateArticle" on:submit={handleSubmit} method="POST" class="py-3 px-2 bg-slate-300 border-8 {article.type.split('-')[0] == 'todo' ? (article.type.split('-')[1] == 'green' ? 'border-green-600' : (article.type.split('-')[1] == 'yellow' ? 'border-yellow-600' : 'border-red-600')) : 'border-gray-600' } rounded-lg">
 
     <div class="flex">
 
