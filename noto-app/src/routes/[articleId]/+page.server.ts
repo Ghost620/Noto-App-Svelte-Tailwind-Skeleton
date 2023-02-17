@@ -26,8 +26,8 @@ export const actions: Actions = {
 		if (!(user && session)) {
 			throw redirect(302, "/")
 		}
-		const { content } = Object.fromEntries(await request.formData()) as {
-			title: string
+		const { type, content } = Object.fromEntries(await request.formData()) as {
+			type: string
 			content: string
 		}
 
@@ -37,7 +37,9 @@ export const actions: Actions = {
 					id: Number(params.articleId),
 				},
 				data: {
+					type,
 					content,
+					userId: user.userId,
 				},
 			})
 		} catch (err) {

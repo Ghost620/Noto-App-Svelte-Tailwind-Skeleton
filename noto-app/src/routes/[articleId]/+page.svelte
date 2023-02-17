@@ -14,7 +14,7 @@
         if (response.ok) {
             window.location.href = '/';
         }
-  }
+    }
 
 </script>
 
