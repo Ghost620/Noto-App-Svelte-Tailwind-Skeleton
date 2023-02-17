@@ -69,19 +69,13 @@
                         <span class="flex-end font-bold text-gray-900 text-2xl"> ToDo </span>
                     </div>
     
+                    <textarea class="w-full" id="content" name="content" placeholder="Leave a NoTo..." rows={10} />
                     {#if $isNotes}
-                        <textarea class="w-full" id="content" name="content" placeholder="Leave a NoTo..." rows={10} />
-    
                         <TodoFooter />
-    
-                        <button class="bg-cyan-500 text-white font-bold hover:bg-cyan-700 text-lg w-1/2 py-2" type="submit">POST</button>
                     {:else}
-                        <textarea class="w-full" id="content" name="content" placeholder="Leave a NoTo..." rows={10} />
-                        
                         <NotesFooter />
-
-                        <button class="bg-cyan-500 text-white font-bold hover:bg-cyan-700 text-lg w-1/2 py-2" type="submit">POST</button>
                     {/if}
+                    <button class="bg-cyan-500 text-white font-bold hover:bg-cyan-700 text-lg w-1/2 py-2" type="submit">POST</button>
     
                 </form>
             </main>
