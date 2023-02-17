@@ -2,6 +2,7 @@
 // @ts-nocheck
     export let article;
     import NotesFooter from "./NotesFooter.svelte";
+    $: typee = 'note'
     
     async function handleSubmit(event: { preventDefault: () => void; target: any; }) {
         event.preventDefault();
@@ -37,10 +38,20 @@
         }
     }
 
+    async function handleChange() {
+        const radioButtons = document.getElementById(article.id).parentNode.parentNode.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(radio => {
+            if ((radio as HTMLInputElement).checked) {
+                typee = 'todo-'+(radio as HTMLInputElement).value;
+            }
+        });
+    }
+
   </script>
 
-<form action="?/updateArticle" on:submit={handleSubmit} method="POST" class="py-3 px-2 bg-slate-300 border-8 {article.type.split('-')[0] == 'todo' ? (article.type.split('-')[1] == 'green' ? 'border-green-600' : (article.type.split('-')[1] == 'yellow' ? 'border-yellow-600' : 'border-red-600')) : 'border-gray-600' } rounded-lg">
+<form action="?/updateArticle&id={article.id}" method="POST" class="py-3 px-2 bg-slate-300 border-8 {article.type.split('-')[0] == 'todo' ? (article.type.split('-')[1] == 'green' ? 'border-green-600' : (article.type.split('-')[1] == 'yellow' ? 'border-yellow-600' : 'border-red-600')) : 'border-gray-600' } rounded-lg">
 
+    <input type="hidden" name="type" value={typee}>
     <div class="flex">
 
         <div class="w-full">
@@ -54,19 +65,19 @@
                                 
                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600 flex flex-col items-center">
                             <div class="flex items-center">
-                                <input id="horizontal-list-radio-license" type="radio" value="red" name="list-radio" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500">
+                                <input on:change={handleChange} id="horizontal-list-radio-license" type="radio" value="red" name="list-radio" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500">
                                 <label for="horizontal-list-radio-license" class="w-full py-3 ml-2 text-sm font-medium text-white">Not Started </label>
                             </div>
                         </li>
                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600 flex flex-col items-center">
                             <div class="flex items-center">
-                                <input id="horizontal-list-radio-license" type="radio" value="yellow" name="list-radio" class="w-4 h-4 text-yellow-600 bg-gray-100 border-gray-300 focus:ring-yellow-500">
+                                <input on:change={handleChange} id="horizontal-list-radio-license" type="radio" value="yellow" name="list-radio" class="w-4 h-4 text-yellow-600 bg-gray-100 border-gray-300 focus:ring-yellow-500">
                                 <label for="horizontal-list-radio-millitary" class="w-full py-3 ml-2 text-sm font-medium text-white">In Progress</label>
                             </div>
                         </li>
                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600 flex flex-col items-center">
                             <div class="flex items-center">
-                                <input id="horizontal-list-radio-license" type="radio" value="green" name="list-radio" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500">
+                                <input on:change={handleChange} id="horizontal-list-radio-license" type="radio" value="green" name="list-radio" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500">
                                 <label for="horizontal-list-radio-passport" class="w-full py-3 ml-2 text-sm font-medium text-white">Complete</label>
                             </div>
                         </li>
