@@ -1,15 +1,12 @@
-<script>
+<script lang="ts">
 // @ts-nocheck
     export let article;
     import NotesFooter from "./NotesFooter.svelte";
-    import TodoFooter from "./TodoFooter.svelte";
-
-    let selectedOption = article.type.split('-')[1];
-
-    async function handleOptionChange(event) {
+    
+    async function handleSubmit(event: { preventDefault: () => void; target: any; }) {
         event.preventDefault();
-        selectedOption = event.target.value;
-        console.log(selectedOption, document.get)
+        const form = event.target;
+        const formData = new FormData(form);
         const response = await fetch('?/updateArticle', {
             method: 'POST',
             body: formData
@@ -18,9 +15,10 @@
             window.location.href = '/';
         }
     }
+
   </script>
 
-<article class="py-3 px-2 bg-slate-300 border-8 {article.type.split('-')[0] == 'todo' ? (article.type.split('-')[1] == 'green' ? 'border-green-600' : (article.type.split('-')[1] == 'yellow' ? 'border-yellow-600' : 'border-red-600')) : 'border-gray-600' } rounded-lg">
+<form action="?/updateArticle" on:submit={handleSubmit} method="POST" class="py-3 px-2 bg-slate-300 border-8 {article.type.split('-')[0] == 'todo' ? (article.type.split('-')[1] == 'green' ? 'border-green-600' : (article.type.split('-')[1] == 'yellow' ? 'border-yellow-600' : 'border-red-600')) : 'border-gray-600' } rounded-lg">
 
     <div class="flex">
 
@@ -35,19 +33,19 @@
                                 
                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600 flex flex-col items-center">
                             <div class="flex items-center">
-                                <input checked={selectedOption === 'red'} on:change={handleOptionChange} id="horizontal-list-radio-license" type="radio" value="red" name="list-radio" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500">
+                                <input id="horizontal-list-radio-license" type="radio" value="red" name="list-radio" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500">
                                 <label for="horizontal-list-radio-license" class="w-full py-3 ml-2 text-sm font-medium text-white">Not Started </label>
                             </div>
                         </li>
                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600 flex flex-col items-center">
                             <div class="flex items-center">
-                                <input checked={selectedOption === 'yellow'} on:change={handleOptionChange} id="horizontal-list-radio-license" type="radio" value="yellow" name="list-radio" class="w-4 h-4 text-yellow-600 bg-gray-100 border-gray-300 focus:ring-yellow-500">
+                                <input id="horizontal-list-radio-license" type="radio" value="yellow" name="list-radio" class="w-4 h-4 text-yellow-600 bg-gray-100 border-gray-300 focus:ring-yellow-500">
                                 <label for="horizontal-list-radio-millitary" class="w-full py-3 ml-2 text-sm font-medium text-white">In Progress</label>
                             </div>
                         </li>
                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600 flex flex-col items-center">
                             <div class="flex items-center">
-                                <input checked={selectedOption === 'green'} on:change={handleOptionChange} id="horizontal-list-radio-license" type="radio" value="green" name="list-radio" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500">
+                                <input id="horizontal-list-radio-license" type="radio" value="green" name="list-radio" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500">
                                 <label for="horizontal-list-radio-passport" class="w-full py-3 ml-2 text-sm font-medium text-white">Complete</label>
                             </div>
                         </li>
@@ -67,14 +65,12 @@
                 {/if}
                 
             </div>
-        
-            <p class="font-semibold px-3 py-4 text-justify">
-                {article.content}
-            </p>
+            <textarea class="font-semibold px-3 py-4 text-justify w-full -mx-2 overflow-hidden" id="content" name="content" value={article.content} rows={article.content.split('\n').length+3}/>
         </div>
     
         <div class="rounded-lg grid place-items-center align-middle mt-3 space-y-2 items-center">
             <a href="/{article.id}" role="button" class="bg-teal-600 hover:bg-teal-700 text-white rounded-md w-20 h-8 text-center py-1">Edit</a>
+            <button class="bg-cyan-600 hover:bg-cyan-700 text-white rounded-md w-20 h-8 text-center" type="submit"> Update </button>
             <form action="?/deleteArticle&id={article.id}" method="POST">
                 <button type="submit" class="bg-red-600 hover:bg-red-700 text-white rounded-md w-20 h-8 text-center">Delete</button>
             </form>
@@ -82,4 +78,4 @@
 
     </div>
     
-</article>
+</form>
