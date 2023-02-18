@@ -2,7 +2,7 @@
 import { prisma } from "$lib/server/prisma"
 import { error, fail, redirect } from "@sveltejs/kit"
 
-export const load = async ({ params }) => {
+export const load = async ({}) => {
 	return {
 		articles: await prisma.article.findMany(),
 	}
