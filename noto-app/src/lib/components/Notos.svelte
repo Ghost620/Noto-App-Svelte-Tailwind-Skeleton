@@ -3,41 +3,6 @@
     export let article;
     import NotesFooter from "./NotesFooter.svelte";
     $: typee = article.type
-    
-    async function handleSubmit(event: { preventDefault: () => void; target: any; }) {
-        event.preventDefault();
-
-        const radioButtons = document.getElementById(article.id).parentNode.parentNode.querySelectorAll('input[type="radio"]');
-        let selectedValue;
-
-        radioButtons.forEach(radio => {
-            if ((radio as HTMLInputElement).checked) {
-                selectedValue = (radio as HTMLInputElement).value;
-            }
-        });
-
-        const formData = new URLSearchParams({
-            type: (article.type.split('-')[0] == 'todo') ? ( (selectedValue == 'green') ? 'todo-green' : ((selectedValue == 'yellow') ? 'todo-yellow' : 'todo-red' ) ) : 'note',
-            content: (document.getElementById(article.id).parentNode.parentNode.querySelector('textarea') as HTMLInputElement)?.value,
-        });
-
-        const response = await fetch(`/?updateArticle`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: formData
-        });
-
-        if (response.ok) {
-            window.location.href = '/';
-            console.log('done')
-        } else {
-            console.log(response)
-            throw new Error(`Failed to update article: ${response.status} ${response.statusText}`);
-        }
-    }
-
     async function handleChange() {
         const radioButtons = document.getElementById(article.id).parentNode.parentNode.querySelectorAll('input[type="radio"]');
         radioButtons.forEach(radio => {

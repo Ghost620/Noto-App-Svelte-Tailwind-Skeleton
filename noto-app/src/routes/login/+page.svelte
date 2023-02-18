@@ -1,4 +1,3 @@
-
 <div class="flex flex-col mt-40 p-6 max-w-7xl m-72">
 	<form method="POST" class="space-y-6 flex flex-col">
 		<hgroup class="space-y-2">
