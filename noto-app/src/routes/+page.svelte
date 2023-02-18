@@ -4,7 +4,7 @@
     import TodoFooter from "../lib/components/TodoFooter.svelte";
     import Notos from '../lib/components/Notos.svelte';
     import Counter from '../lib/components/Counter.svelte';
-    import { isNotes } from '../lib/store/NotoStore';
+    import { isNotes, notos } from '../lib/store/NotoStore';
     import type { PageData } from './$types'
 	export let data: PageData
 	$: ({ articles } = data)
@@ -47,7 +47,7 @@
 
         <div class="w-1/2 space-y-6 mt-4">
 
-            <div id='noto-section' class="flex flex-col space-y-5 h-[90%] p-2 overflow-y-scroll">
+            <div style="display: {$notos ? 'block' : 'none'}" id='noto-section' class="flex flex-col space-y-5 h-[90%] p-2 overflow-y-scroll">
                 {#each articles as article}
                     <Notos article={article} />
                 {/each}

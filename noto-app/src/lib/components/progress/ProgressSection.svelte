@@ -2,7 +2,7 @@
 // @ts-nocheck
 	import ProgressBar from './ProgressBar.svelte';
 	export let articles;
-
+	import { notos } from '../../store/NotoStore';
 	let todos = articles.filter((noto) => noto.type !== 'note')
 
 	export let completePercentage = 0;
@@ -19,7 +19,7 @@
 	$: notstartedPercentage = Math.round((notstartedCount / totalCount) * 100) || 0;
 </script>
 
-<section class="mt-10 bg-slate-200 rounded-xl p-6">
+<section style="display: {$notos ? '' : 'none'}" class="mt-10 bg-slate-200 rounded-xl p-6">
 	<h3 class="text-xl font-bold text-gray-three"> ToDo Progress </h3>
 	<div class="mt-8 space-y-8">
 		<ProgressBar color={'bg-green-400'} count={completeCount} percentage={completePercentage} />
