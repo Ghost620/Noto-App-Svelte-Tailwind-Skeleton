@@ -30,19 +30,19 @@
                                 
                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600 flex flex-col items-center">
                             <div class="flex items-center">
-                                <input on:change={handleChange} id="horizontal-list-radio-license" type="radio" value="red" name="list-radio" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500">
+                                <input checked={article.type.split('-')[1] == 'red' } on:change={handleChange} id="horizontal-list-radio-license" type="radio" value="red" name="list-radio" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500">
                                 <label for="horizontal-list-radio-license" class="w-full py-3 ml-2 text-sm font-medium text-white">Not Started </label>
                             </div>
                         </li>
                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600 flex flex-col items-center">
                             <div class="flex items-center">
-                                <input on:change={handleChange} id="horizontal-list-radio-license" type="radio" value="yellow" name="list-radio" class="w-4 h-4 text-yellow-600 bg-gray-100 border-gray-300 focus:ring-yellow-500">
+                                <input checked={article.type.split('-')[1] == 'yellow' } on:change={handleChange} id="horizontal-list-radio-license" type="radio" value="yellow" name="list-radio" class="w-4 h-4 text-yellow-600 bg-gray-100 border-gray-300 focus:ring-yellow-500">
                                 <label for="horizontal-list-radio-millitary" class="w-full py-3 ml-2 text-sm font-medium text-white">In Progress</label>
                             </div>
                         </li>
                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600 flex flex-col items-center">
                             <div class="flex items-center">
-                                <input on:change={handleChange} id="horizontal-list-radio-license" type="radio" value="green" name="list-radio" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500">
+                                <input checked={article.type.split('-')[1] == 'green' } on:change={handleChange} id="horizontal-list-radio-license" type="radio" value="green" name="list-radio" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500">
                                 <label for="horizontal-list-radio-passport" class="w-full py-3 ml-2 text-sm font-medium text-white">Complete</label>
                             </div>
                         </li>

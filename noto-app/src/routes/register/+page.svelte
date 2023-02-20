@@ -1,4 +1,12 @@
 
+<script>
+	// @ts-nocheck
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		document.getElementsByTagName('header')[0].style.display = 'none';
+	});
+</script>
 
 <div class="flex flex-col mt-40 p-6 max-w-7xl m-72">
 	<form method="POST" class="space-y-6 flex flex-col">
